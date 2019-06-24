@@ -63,10 +63,10 @@ class dicionario_views {
     }
 
     public function __construct() {
-        $this->DB_HOST = $this->_database[$this->_database_use]['DB_HOST'];
-        $this->DB_USER = $this->_database[$this->_database_use]['DB_USER'];
-        $this->DB_PASS = $this->_database[$this->_database_use]['DB_PASS'];
-        $this->DB_DATA = $this->_database[$this->_database_use]['DB_DATA'];
+        $this->DB_HOST = $DB_HOST;
+        $this->DB_USER = $DB_USER;
+        $this->DB_PASS = $DB_PASS;
+        $this->DB_DATA = $DB_DATA;
         $this->dbg_in('OUT', __FUNCTION__);
         $this->database(1);
         $this->viewOperacoesEstados();
@@ -155,7 +155,7 @@ class dicionario_views {
         mysqli_query($this->_db, $view);
     }
 
-    private function viewOperacoesEstados() {
+    private function viewCrieAqui() {
         $view = "CREATE OR REPLACE  VIEW nome_para view AS "
                 . "consulta vai aqui;";
         return $this->viewExecute($view);
