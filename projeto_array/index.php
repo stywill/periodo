@@ -14,5 +14,7 @@ and open the template in the editor.
         <p><a href="calculando_media.php">Calculando Média</a></p>
         <p><a href="ordenar_array.php">Ordenar Array</a></p>
         <p><a href="explode_implode.php">Explode Implode</a></p>
+        <p><a href="removendoElementosDoArray.php">Removendo Elementos do Array</a></p>
+        <p><a href="array_associativo.php">Arrays Associativos</a></p>
     </body>
 </html>

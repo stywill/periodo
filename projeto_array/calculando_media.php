@@ -1,5 +1,8 @@
 <?php
-require "Calculadora.php";
+namespace Classes;
+require 'autoload.php';
+
+
 
 $notaPortugues = 9;
 $notaMatematica = 3;
