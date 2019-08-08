@@ -11,6 +11,6 @@ and open the template in the editor.
     </head>
     <body>
         <h1>Primeiros passos com exceções</h1>
-        <p><a href="primeiros_passos_com_exceções.php">Primeiros passos com exceções</a></p>
+        <p><a href="primeiros_passos_com_excecoes.php">Primeiros passos com exceções</a></p>
     </body>
 </html>

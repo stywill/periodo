@@ -7,6 +7,7 @@ require_once 'autoload.php';
 
 use classes\Validacao;
 use classes\ContaCorrente;
+use exception\SaldoInsuficienteException;
 
 $contaJoao = new ContaCorrente("João","5199","122221-2",500.00);
 $contaJose = new ContaCorrente("José","7896","4343343-2",1500.00);
@@ -25,7 +26,7 @@ echo "Taxa :".ContaCorrente::$taxaOperacao."<br>";
 
 echo "<br>";
 
-echo "<h2>Conta Corrente: Titular: ".$contaJoao->getTitular()."</h2>";
+echo "<h2>Conta Corrente: Titular: ".$contaJoao->__get("titular")."</h2>";
 var_dump($contaJoao);
 
 
@@ -37,7 +38,7 @@ try {
 
 echo "<h3>Transferir</h3>";
 try{
-    $contaJoao->transferir("teste", $contaMaria);
+    $contaJoao->transferir(50, $contaMaria);
 } catch (InvalidArgumentException $erro){
     echo "Invalid Argument<br>";
     echo $erro->getMessage();
@@ -45,5 +46,13 @@ try{
     echo "Exception<br>";
     echo $erro->getMessage();
 }
-
 var_dump($contaJoao);
+
+echo "<h1>Criando nossas exceções </h1><br>";
+echo "<p>Exceção para o metodo sacar</p>";
+var_dump($contaWilson);
+
+$contaWilson->sacar(7000);
+echo "<br>";
+
+var_dump($contaWilson);

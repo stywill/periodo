@@ -9,6 +9,7 @@
 namespace classes;
 
 use classes\Validacao;
+use exception\SaldoInsuficienteException;
 
 /**
  * Description of ContaCorrente
@@ -24,7 +25,8 @@ class ContaCorrente extends Validacao {
     public $ultimaOperacao;
     public static $totalDeContas;
     public static $taxaOperacao;
-
+    public $totalSaquesNaoPermitidos;
+    
     public function __construct($titular, $agencia, $numero, $saldo) {
         $this->titular = $titular;
         $this->agencia = $agencia;
@@ -54,12 +56,7 @@ class ContaCorrente extends Validacao {
         }
     }
 
-    public function getTitular() {
-        return $this->titular;
-    }
-
     public function __get($campo) {
-        Validacao::protegeAtributo($atributo);
         return $this->$campo;
     }
 
@@ -76,6 +73,16 @@ class ContaCorrente extends Validacao {
     public function sacar($valor) {
         $this->ultimaOperacao("sacar");
         Validacao::verificaNumerico($valor);
+        try {
+            if ($valor > $this->saldo) {
+                $this->totalSaquesNaoPermitidos++;
+                throw new SaldoInsuficienteException("Saldo Insuficiente",$valor,$this->saldo);
+            }
+        } catch (SaldoInsuficienteException $exc) {
+            echo $exc->getMessage()." <b>Valor:".$exc->__get("valor")." Saldo:".$exc->__get("saldo")."</b>";
+        }
+
+
         $this->saldo = $this->saldo - $valor;
         return $this;
     }
@@ -90,7 +97,7 @@ class ContaCorrente extends Validacao {
     public function transferir($valor, ContaCorrente $conta) {
         $this->ultimaOperacao("transferir");
         Validacao::verificaNumerico($valor);
-       
+
         $this->sacar($valor);
         $conta->depositar($valor);
     }
