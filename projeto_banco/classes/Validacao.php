@@ -16,7 +16,7 @@ class Validacao {
 
         if($atributo == "titular" || $atributo == "saldo"){
 
-            throw new \Exception("O atributo $atributo continua privado ");
+            throw new \Exception("O atributo <b>$atributo</b> continua privado ");
 
         }
     }

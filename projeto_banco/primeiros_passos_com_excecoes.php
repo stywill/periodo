@@ -1,7 +1,8 @@
 <?php
-ini_set('display_errors',1);
- error_reporting(E_ALL);
- header('Content-Type: text/html; charset=utf-8');
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+header('Content-Type: text/html; charset=utf-8');
 
 require_once 'autoload.php';
 
@@ -9,25 +10,25 @@ use classes\Validacao;
 use classes\ContaCorrente;
 use exception\SaldoInsuficienteException;
 
-$contaJoao = new ContaCorrente("João","5199","122221-2",500.00);
-$contaJose = new ContaCorrente("José","7896","4343343-2",1500.00);
-$contaMaria = new ContaCorrente("Maria","6541","4343341-2",3500.00);
-$contaWilson = new ContaCorrente("Wilson","42863","4752135-2",6500.00);
-$contaJuliana = new ContaCorrente("Juliana","123456","4752135-2",8000.00);
-$contaIsabel = new ContaCorrente("Isabel","23456","4752135-2",500.00);
-$contaVicente = new ContaCorrente("Vicente","09876","789654-2",1700.00);
+$contaJoao = new ContaCorrente("João", "5199", "122221-2", 500.00);
+$contaJose = new ContaCorrente("José", "7896", "4343343-2", 1500.00);
+$contaMaria = new ContaCorrente("Maria", "6541", "4343341-2", 3500.00);
+$contaWilson = new ContaCorrente("Wilson", "42863", "4752135-2", 6500.00);
+$contaJuliana = new ContaCorrente("Juliana", "123456", "4752135-2", 8000.00);
+$contaIsabel = new ContaCorrente("Isabel", "23456", "4752135-2", 500.00);
+$contaVicente = new ContaCorrente("Vicente", "09876", "789654-2", 1700.00);
 
 
 echo "<h1>conhecendo exceções 2.</h1><br>";
 echo "contador de contas e divisor de taxa<br>";
 
-echo "Total de contas :".ContaCorrente::$totalDeContas."<br>";
-echo "Taxa :".ContaCorrente::$taxaOperacao."<br>";
+echo "Total de contas :" . ContaCorrente::$totalDeContas . "<br>";
+echo "Taxa :" . ContaCorrente::$taxaOperacao . "<br>";
 
 echo "<br>";
 
-echo "<h2>Conta Corrente: Titular: ".$contaJoao->__get("titular")."</h2>";
-var_dump($contaJoao);
+echo "<h2>Conta Corrente: Titular: " . $contaJoao->__get("titular") . "</h2>";
+
 
 
 try {
@@ -37,12 +38,12 @@ try {
 }
 
 echo "<h3>Transferir</h3>";
-try{
-    $contaJoao->transferir(50, $contaMaria);
-} catch (InvalidArgumentException $erro){
+try {
+    $contaJoao->transferir(-50, $contaMaria);
+} catch (InvalidArgumentException $erro) {
     echo "Invalid Argument<br>";
     echo $erro->getMessage();
-} catch (Exception $erro){
+} catch (Exception $erro) {
     echo "Exception<br>";
     echo $erro->getMessage();
 }
@@ -56,3 +57,27 @@ $contaWilson->sacar(7000);
 echo "<br>";
 
 var_dump($contaWilson);
+//$contaWilson->__set("titular","Isabel");
+echo "<br>";
+$contaWilson->depositar("teste");
+var_dump($contaWilson);
+
+echo "<br><br>";
+echo "<h1>Excessão de operação não ralizada</h1><br>";
+echo "Operações não ralizadas: " . ContaCorrente::$operacaoNaoRealizada;
+try {
+    $contaWilson->transferir(-50, $contaJuliana);
+} catch (InvalidArgumentException $erro) {
+    echo "Invalid Argument<br>";
+    echo $erro->getMessage();
+} catch (Exception $erro) {
+    echo "<br><h1>get previous</h1><br>";
+    echo $erro->getPrevious()->getMessage();
+    echo "<br><h1>Get Trace</h1><br>";
+    echo $erro->getTraceAsString();
+    echo "<br><h1>Get Trace Previous</h1><br>";
+    echo $erro->getPrevious()->getTraceAsString();
+}
+echo "<pre>";
+$contaWilson->transferir(10, $contaJuliana);
+echo "</pre>";
