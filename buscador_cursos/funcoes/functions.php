@@ -1,5 +1,5 @@
 <?php
 
 function exibeMensagem($mensagem){
-    return $mensagem."<br>";
+    return $mensagem.PHP_EOL;
 }
