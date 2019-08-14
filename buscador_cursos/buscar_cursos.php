@@ -1,11 +1,15 @@
 <?php
-
+/*
+Para inserir classes ao autoload.php do composer 
+ * 1- inserir a seguinte classe ao 
+ *  */
 require "vendor/autoload.php";
-require "src/Buscador.php";
 
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Stywill\BuscadorDeCursos\Buscador;
+
+
 /* 
 Na minha instalação do php estou com o seguinte erro 
  * Fatal error: Uncaught GuzzleHttp\Exception\RequestException: cURL error 60: SSL certificate problem: unable to get local issuer certificate (see http://curl.haxx.se/libcurl/c/libcurl-errors.html) in 
@@ -21,5 +25,5 @@ $buscador = new Buscador($client,$crawler);
 $cursos = $buscador->buscar("cursos-online-programacao/php");
 
 foreach ($cursos as $curso) {
-    echo $curso."<br>";
+    echo exibeMensagem($curso);
 }

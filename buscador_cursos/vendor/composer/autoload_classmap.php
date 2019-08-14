@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'TesteClassMap' => $baseDir . '/src/TesteClassMap.php',
+    'TesteClassMap2' => $baseDir . '/src/TesteClassMap.php',
 );

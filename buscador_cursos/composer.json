@@ -12,5 +12,13 @@
         "guzzlehttp/guzzle": "^6.3",
         "symfony/dom-crawler": "^4.2",
         "symfony/css-selector": "^3.4"
+    },
+    
+    "autoload": {
+        "classmap": ["src/TesteClassMap.php"],
+        "files":["funcoes/functions.php"],
+        "psr-4": {
+            "Stywill\\BuscadorDeCursos\\": "src/"
+        }
     }
 }
