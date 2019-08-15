@@ -1,4 +1,5 @@
 <?php
+
 namespace Stywill\BuscadorDeCursos;
 
 use GuzzleHttp\ClientInterface;
