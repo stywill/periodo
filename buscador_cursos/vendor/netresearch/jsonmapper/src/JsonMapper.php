@@ -82,6 +82,14 @@ class JsonMapper
     public $bIgnoreVisibility = false;
 
     /**
+     * Remove attributes that were not passed in JSON,
+     * to avoid confusion between them and NULL values.
+     *
+     * @var boolean
+     */
+    public $bRemoveUndefinedAttributes = false;
+
+    /**
      * Override class names that JsonMapper uses to create objects.
      * Useful when your setter methods accept abstract classes or interfaces.
      *
@@ -284,6 +292,10 @@ class JsonMapper
             $this->checkMissingData($providedProperties, $rc);
         }
 
+        if ($this->bRemoveUndefinedAttributes) {
+            $this->removeUndefinedAttributes($object, $providedProperties);
+        }
+
         return $object;
     }
 
@@ -340,6 +352,26 @@ class JsonMapper
     }
 
     /**
+     * Remove attributes from object that were not passed in JSON data.
+     *
+     * This is to avoid confusion between those that were actually passed
+     * as NULL, and those that weren't provided at all.
+     *
+     * @param object $object             Object to remove properties from
+     * @param array  $providedProperties Array with JSON properties
+     *
+     * @return void
+     */
+    protected function removeUndefinedAttributes($object, $providedProperties)
+    {
+        foreach (get_object_vars($object) as $propertyName => $dummy) {
+            if (!isset($providedProperties[$propertyName])) {
+                unset($object->{$propertyName});
+            }
+        }
+    }
+
+    /**
      * Map an array
      *
      * @param array  $json       JSON array structure from json_decode()
@@ -357,8 +389,9 @@ class JsonMapper
      */
     public function mapArray($json, $array, $class = null, $parent_key = '')
     {
-        $class = $this->getMappedType($class);
+        $originalClass = $class;
         foreach ($json as $key => $jvalue) {
+            $class = $this->getMappedType($originalClass, $jvalue);
             if ($class === null) {
                 $array[$key] = $jvalue;
             } else if ($this->isArrayOfType($class)) {
@@ -575,7 +608,14 @@ class JsonMapper
         if ($useParameter) {
             return new $class($jvalue);
         } else {
-            return (new ReflectionClass($class))->newInstanceWithoutConstructor();
+            $reflectClass = new ReflectionClass($class);
+            $constructor  = $reflectClass->getConstructor();
+            if (null === $constructor
+                || $constructor->getNumberOfRequiredParameters() > 0
+            ) {
+                return $reflectClass->newInstanceWithoutConstructor();
+            }
+            return $reflectClass->newInstance();
         }
     }
 
@@ -592,7 +632,7 @@ class JsonMapper
     {
         if (isset($this->classMap[$type])) {
             $target = $this->classMap[$type];
-        } else if ($type !== '' && $type[0] == '\\'
+        } else if (is_string($type) && $type !== '' && $type[0] == '\\'
             && isset($this->classMap[substr($type, 1)])
         ) {
             $target = $this->classMap[substr($type, 1)];
