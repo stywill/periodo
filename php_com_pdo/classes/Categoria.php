@@ -2,6 +2,7 @@
 
 namespace classes;
 use classes\Conexao;
+
 class Categoria {
 
     public $id;
