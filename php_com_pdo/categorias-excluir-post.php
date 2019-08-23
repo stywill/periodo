@@ -1,11 +1,15 @@
 <?php
+
 require'autoload.php';
+
 use classes\Categoria;
-$id = $_GET['id'];
-$categoria = new Categoria($id);
+use classes\Erro;
 
-$categoria->excluir();
-
-header('Location:categorias.php');
-
-
+try {
+    $id = $_GET['id'];
+    $categoria = new Categoria($id);
+    $categoria->excluir();
+    header('Location:categorias.php');
+} catch (\Exception $e) {
+    Erro::trataErro($e);
+}

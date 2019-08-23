@@ -1,9 +1,15 @@
-<?php 
+<?php
 require_once 'cabecalho.php';
 
 use classes\Categoria;
-$id = $_GET['id'];
-$categoria = new Categoria($id);
+use classes\Erro;
+
+try {
+    $id = $_GET['id'];
+    $categoria = new Categoria($id);
+} catch (\Exception $e) {
+    Erro::trataErro($e);
+}
 ?>
 
 <div class="row">
@@ -16,8 +22,8 @@ $categoria = new Categoria($id);
         <div class="col-md-6 col-md-offset-3">
             <div class="form-group">
                 <label for="nome">Nome da Categoria</label>
-                <input type="hidden" name="id" value="<?=$categoria->__get('id');?>">
-                <input type="text" name="nome" value="<?=$categoria->__get('nome');?>" class="form-control" placeholder="Nome da Categoria">
+                <input type="hidden" name="id" value="<?= $categoria->__get('id'); ?>">
+                <input type="text" name="nome" value="<?= $categoria->__get('nome'); ?>" class="form-control" placeholder="Nome da Categoria">
             </div>
             <input type="submit" class="btn btn-success btn-block" value="Salvar">
         </div>

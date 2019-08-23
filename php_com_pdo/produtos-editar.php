@@ -1,4 +1,16 @@
 <?php require_once 'cabecalho.php' ?>
+<?php
+
+use classes\Erro;
+use classes\Categoria;
+use classes\Produto;
+
+try {
+   $categorias = Categoria::listar(); 
+} catch (Exception $e) {
+    Erro::trataErro($e);
+}
+?>
 <div class="row">
     <div class="col-md-12">
         <h2>Editar Nova Categoria</h2>
@@ -23,8 +35,10 @@
             <div class="form-group">
                 <label for="nome">Categoria do Produto</label>
                 <select class="form-control">
-                    <option value="1" selected>Livros</option>
-                    <option value="1">Revistas</option>
+                    <option value="">Selecione</option>
+                    <?php foreach ($categorias as $linhas):?>                   
+                    <option value="<?=$linhas['id'];?>"><?=$linhas['nome'];?></option>
+                    <?php endforeach;?>
                 </select>
             </div>
             <input type="submit" class="btn btn-success btn-block" value="Salvar">
