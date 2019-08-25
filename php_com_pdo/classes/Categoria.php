@@ -34,32 +34,39 @@ class Categoria {
 
     public function carregar() {
         //throw new \Exception('Erro ao carregar categoria');
-        $query = "SELECT id, nome FROM categorias WHERE id=" . $this->__get('id');
+        $query = "SELECT id, nome FROM categorias WHERE id=:id";
         $conexao = Conexao::pegaConexao();
-        $resultado = $conexao->query($query);
-        $listar = $resultado->fetchAll();
-        foreach ($listar as $lista) {
-            $this->__set('nome', $lista['nome']);
-        }
+        $stmt = $conexao->prepare($query);
+        $stmt->bindValue(':id',$this->__get('id'));
+        $stmt->execute();
+        $linha = $stmt->fetch();
+        $this->__set('nome', $linha['nome']);
         return $this;
     }
 
     public function inserir() {
-        $query = "INSERT INTO categorias (nome) VALUES ('$this->nome')";
+        $query = "INSERT INTO categorias (nome) VALUES (:nome)";
         $conexao = Conexao::pegaConexao();
-        $conexao->exec($query);
+        $stmt = $conexao->prepare($query);
+        $stmt->bindValue(':nome',$this->__get('nome'));
+        $stmt->execute();
     }
 
     public function atualizar() {
-        $query = "UPDATE categorias SET nome = '{$this->__get('nome')}' WHERE id= {$this->__get('id')}";
+        $query = "UPDATE categorias SET nome = :nome WHERE id= :id";
         $conexao = Conexao::pegaConexao();
-        $conexao->exec($query);
+        $stmt = $conexao->prepare($query);
+        $stmt->bindValue(':id',$this->__get('id'));
+        $stmt->bindValue(':nome',$this->__get('nome'));
+        $stmt->execute();
     }
 
     public function excluir() {
-        $query = "DELETE FROM categorias WHERE id = {$this->__get('id')}";
+        $query = "DELETE FROM categorias WHERE id = :id";
         $conexao = Conexao::pegaConexao();
-        $conexao->exec($query);
+        $stmt = $conexao->prepare($query);
+        $stmt->bindValue(':id',$this->__get('id'));
+        $stmt->execute();
     }
 
 }
