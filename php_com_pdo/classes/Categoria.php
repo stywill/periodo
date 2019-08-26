@@ -8,7 +8,7 @@ class Categoria {
 
     public $id;
     public $nome;
-
+    public $produtos;
     public function __construct($id = false) {
         if ($id) {
             $this->__set('id', $id);
@@ -68,5 +68,7 @@ class Categoria {
         $stmt->bindValue(':id',$this->__get('id'));
         $stmt->execute();
     }
-
+    public function carregarProdutos() {
+        $this->produtos = Produto::listarPorCategoria($this->id);
+    }
 }
