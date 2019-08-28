@@ -1,0 +1,45 @@
+OBS:
+Todos os arquivos de classes e negocios devem ser criados dentro da pasta src.
+src->commands
+  |->Entity
+  |->Helper
+
+O banco de dados no caso desse projeto fica na pasta var
+var->data
+
+executar no cmd:
+Com o composer instalado 'composer dumpautoload' .
+'composer require doctrine/orm'  para instalar o doctrine na pasta escolhida.
+
+Agora configurar o composer.json da seguinte forma.
+
+{
+    "require": {
+        "doctrine/orm": "^2.6"
+    },
+    "autoload":{
+        "psr-4":{
+            "Wilson\\Doctrine\\":"src/" -> namespace do projeto
+        }
+    }
+} 
+
+
+'vendor\bin\doctrine.bat' 
+
+caso não apareca a lista de comando criar o arquivo cli-config.php na raiz do projeto.
+
+depois disso rodar novamente o vendor\bin\doctrine.bat
+
+tudo ok acresentar vendor\bin\doctrine.bat orm:info
+ Found 1 mapped entities:
+ [OK]   Wilson\Doctrine\Entity\Aluno
+
+Agora vendor\bin\doctrine.bat orm:mapping:describe
+Feito isso recebemos diversos dados ,incluindo o mapeamento dos campos/tipos da entidade
+incluindo todos os atributos possíveis que podem ser passados como parâmetros da anotação @Column.
+
+Depois vendor\bin\doctrine.bat orm:schema-tool:create, que processa o schema e cria diretamente com o EntityManager
+ou gera o SQL oara criar esse schema no banco de dados.
+Executando esse comando recebemos uma informação dizendo que essa operação não deveria ser executada no ambiente de produção.
+Entretanto a base sera criada na pasta "data"
