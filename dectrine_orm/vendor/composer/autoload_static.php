@@ -12,6 +12,11 @@ class ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa
     );
 
     public static $prefixLengthsPsr4 = array (
+        'Z' => 
+        array (
+            'Zend\\EventManager\\' => 18,
+            'Zend\\Code\\' => 10,
+        ),
         'W' => 
         array (
             'Wilson\\Doctrine\\' => 16,
@@ -21,15 +26,18 @@ class ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa
             'Symfony\\Polyfill\\Php73\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Contracts\\Service\\' => 26,
+            'Symfony\\Component\\Stopwatch\\' => 28,
             'Symfony\\Component\\Console\\' => 26,
         ),
         'P' => 
         array (
             'Psr\\Container\\' => 14,
+            'PackageVersions\\' => 16,
         ),
         'D' => 
         array (
             'Doctrine\\ORM\\' => 13,
+            'Doctrine\\Migrations\\' => 20,
             'Doctrine\\Instantiator\\' => 22,
             'Doctrine\\DBAL\\' => 14,
             'Doctrine\\Common\\Lexer\\' => 22,
@@ -42,6 +50,14 @@ class ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa
     );
 
     public static $prefixDirsPsr4 = array (
+        'Zend\\EventManager\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-eventmanager/src',
+        ),
+        'Zend\\Code\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/zendframework/zend-code/src',
+        ),
         'Wilson\\Doctrine\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
@@ -58,6 +74,10 @@ class ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa
         array (
             0 => __DIR__ . '/..' . '/symfony/service-contracts',
         ),
+        'Symfony\\Component\\Stopwatch\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/stopwatch',
+        ),
         'Symfony\\Component\\Console\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
@@ -66,9 +86,17 @@ class ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
+        'PackageVersions\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ocramius/package-versions/src/PackageVersions',
+        ),
         'Doctrine\\ORM\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/orm/lib/Doctrine/ORM',
+        ),
+        'Doctrine\\Migrations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/migrations/lib/Doctrine/Migrations',
         ),
         'Doctrine\\Instantiator\\' => 
         array (
@@ -107,6 +135,16 @@ class ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'ProxyManager\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/ocramius/proxy-manager/src',
+            ),
+        ),
+    );
+
     public static $classMap = array (
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
     );
@@ -116,6 +154,7 @@ class ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa::$prefixesPsr0;
             $loader->classMap = ComposerStaticInitb595214b0f6a5cbf5d97f4fe0fa23afa::$classMap;
 
         }, null, ClassLoader::class);

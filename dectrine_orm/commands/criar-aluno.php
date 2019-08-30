@@ -1,17 +1,28 @@
 <?php
 
 use Wilson\Doctrine\Entity\Aluno;
+use Wilson\Doctrine\Entity\Telefone;
 use Wilson\Doctrine\Helper\EntityManagerFactory;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-$alunos = new Aluno($argv[1]);
-$alunos->setNome($argv[1]);
-
 $entityManagerFactory = new EntityManagerFactory();
-
 $entityManager = $entityManagerFactory->getEntityManager();
-$entityManager->persist($alunos);
+
+$aluno = new Aluno($argv[1]);
+$aluno->setNome($argv[1]);
+
+for($i =2; $i < $argc; $i++){
+    $numeroTelefone = $argv[$i];
+    $telefone = new Telefone();
+    /* o telefone é inserido na classe aluno com o parametro cascade={"remove","persist"}*/
+    $telefone->setNumero($numeroTelefone);
+
+    $aluno->addTelefone($telefone);
+}
+
+
+$entityManager->persist($aluno);
 $entityManager->flush();
 
 //inserir varios alunos
