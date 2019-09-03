@@ -1,8 +1,8 @@
 OBS:
 Todos os arquivos de classes e negocios devem ser criados dentro da pasta src.
-src->commands
-  |->Entity
+src->Entity
   |->Helper
+Todos os comandos vão para pasta commands
 
 O banco de dados no caso desse projeto fica na pasta var
 var->data
@@ -43,24 +43,3 @@ Depois vendor\bin\doctrine.bat orm:schema-tool:create, que processa o schema e c
 ou gera o SQL oara criar esse schema no banco de dados.
 Executando esse comando recebemos uma informação dizendo que essa operação não deveria ser executada no ambiente de produção.
 Entretanto a base sera criada na pasta "data"
-
-
-Criando Migrations.
-Ver documentação no site: https://www.doctrine-project.org/projects/doctrine-migrations/en/latest/reference/introduction.html
-
-Executar no cmd o comando composer require doctrine/migrations
-
-Depois criar o arquivo de configuração na raiz do projeto "migrations.php"
-<?php
-
-return [
-    'name' => 'Fundamentos Doctrine',<-----------------Nome do projeto
-    'migrations_namespace' => 'Wilson\\Doctrine',<-----Namespace do projeto
-    'table_name' => 'doctrine_migration_versions',
-    'column_name' => 'version',
-    'column_length' => 14,
-    'executed_at_column_name' => 'executed_at',
-    'migrations_directory' => 'src/Migrations',<--------Aqui vai o diretorio onde as migrations seram criadas
-    'all_or_nothing' => true,
-    'check_database_platform' => true,
-];

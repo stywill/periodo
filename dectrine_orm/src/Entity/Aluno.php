@@ -3,11 +3,11 @@
 namespace Wilson\Doctrine\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use mysql_xdevapi\Collection;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Wilson\Doctrine\Repository\AlunoRepository")
  */
 class Aluno
 {
@@ -22,7 +22,7 @@ class Aluno
      */
     private $nome;
     /**
-     * @OneToMany(targetEntity="Telefone",mappedBy="aluno",cascade={"remove","persist"})
+     * @OneToMany(targetEntity="Telefone",mappedBy="aluno",cascade={"remove","persist"}, fetch="EAGER")
      */
     private $telefones;
     /**
@@ -56,6 +56,7 @@ class Aluno
         $telefone->setAluno($this);
         return $this;
     }
+    /**@return Telefone[]*/
     public function getTelefones():Collection
     {
         return $this->telefones;
@@ -69,6 +70,7 @@ class Aluno
         $curso->addAluno($this);
         return $this;
     }
+    /**@return Curso[]*/
     public function getCursos():Collection
     {
         return $this->cursos;

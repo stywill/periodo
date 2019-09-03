@@ -9,11 +9,19 @@ require_once __DIR__.'/../vendor/autoload.php';
 $entityManagerFactory = new EntityManagerFactory();
 $entityManager = $entityManagerFactory->getEntityManager();
 
+/* Esse codigo vai ser substituido pelo Doctrine Query Language (dql)
+* usando o createQuery()
 $alunosRepository = $entityManager->getRepository(Aluno::class);
+$alunosList = $alunosRepository->findAll();
+*
+*Ctrl+ALT+v para passar um conteudo para uma varialve*/
+$dql = "SELECT aluno FROM Wilson\\Doctrine\Entity\Aluno  aluno";
+$query = $entityManager->createQuery($dql);
+$alunosList = $query->getResult();
+
 /**
  * @var Aluno[] $alunosList
  */
-$alunosList = $alunosRepository->findAll();
 echo "Buscar todos\n";
 foreach ($alunosList AS $aluno){
     $telefones = $aluno
