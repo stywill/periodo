@@ -42,4 +42,17 @@ incluindo todos os atributos possíveis que podem ser passados como parâmetros 
 Depois vendor\bin\doctrine.bat orm:schema-tool:create, que processa o schema e cria diretamente com o EntityManager
 ou gera o SQL oara criar esse schema no banco de dados.
 Executando esse comando recebemos uma informação dizendo que essa operação não deveria ser executada no ambiente de produção.
-Entretanto a base sera criada na pasta "data"
+Entretanto a base sera criada na pasta "data".
+
+Para alterar o banco de sqlite para mysql basta alterar o arquivo EntityManagerFactory.php
+Não é recomendado usar as Migrations criadas.
+os paramentros são
+'driver'=>'pdo_mysql',
+'host'=>'127.0.0.1',
+'dbname'=>'curso_doctrine',
+'user'=>'root',
+'password'=>''
+
+em seguida no terminal executar o comando vendor\bin\doctrine.bat orm:schema-tool:create
+E o banco será criado.
+Para fazer alterações ai sim é recomendado criar migrations.

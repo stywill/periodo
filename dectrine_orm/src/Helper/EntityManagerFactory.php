@@ -23,8 +23,16 @@ class EntityManagerFactory
                 true
                 );
         $connection = [
+            /*Conectar usando o sqlite
             'driver'=>'pdo_sqlite',
             'path'=>$rootDir.'/var/data/banco.sqlite'
+            */
+            'driver'=>'pdo_mysql',
+            'host'=>'127.0.0.1',
+            'dbname'=>'curso_doctrine',
+            'user'=>'root',
+            'password'=>''
+
         ];
         return EntityManager::create($connection, $config);
     }
