@@ -1,0 +1,21 @@
+Para esse progeto iniciar primerio deve rodar composer install dentro da pasta do projeto.
+
+É importante que descomentea extenção "extension-pdo-sqlite" no arquivo "php.ini" que faz parte da instalação PHP.
+
+Para rodar direto no servidor web do php "php -S localhost:8080 -t public" o -t é a pasta target.
+
+No caso desse erro 
+Warning: require(C:\Users\WILSON~1\AppData\Local\Temp\__CG__AluraCursosEntityCurso.php): failed to open stream: No such file or directory in 
+C:\wamp\www\brand\Git_arquivos\gerenciador-cursos-mvc\vendor\doctrine\common\lib\Doctrine\Common\Proxy\AbstractProxyFactory.php on line 206
+
+Fatal error: require(): Failed opening required 'C:\Users\WILSON~1\AppData\Local\Temp\__CG__AluraCursosEntityCurso.php' (include_path='.;C:\php\pear') 
+in C:\wamp\www\brand\Git_arquivos\gerenciador-cursos-mvc\vendor\doctrine\common\lib\Doctrine\Common\Proxy\AbstractProxyFactory.php on line 206
+
+executar no prompt " vendor\bin\doctrine orm:generate-proxies"
+
+Isso ocorre apenas no windows provavelmente porque o doctrine não tem as premições necessarias na pasta.
+
+Comando para inserir sql direto na base do sqlite via doctrine
+.\vendor\bin\doctrine dbal:run-sql
+
+$argon2i$v=19$m=65536,t=4,p=1$WWl0dEZ2VXBybVRSbnZkTw$qa/KztgG9vP8BX3kBVkKzF5aZqdH62nsOQnLIWkqXSc
