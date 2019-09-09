@@ -1,4 +1,4 @@
-Para esse progeto iniciar primerio deve rodar composer install dentro da pasta do projeto.
+﻿Para esse progeto iniciar primerio deve rodar composer install dentro da pasta do projeto.
 
 É importante que descomentea extenção "extension-pdo-sqlite" no arquivo "php.ini" que faz parte da instalação PHP.
 
@@ -19,3 +19,5 @@ Comando para inserir sql direto na base do sqlite via doctrine
 .\vendor\bin\doctrine dbal:run-sql
 
 $argon2i$v=19$m=65536,t=4,p=1$WWl0dEZ2VXBybVRSbnZkTw$qa/KztgG9vP8BX3kBVkKzF5aZqdH62nsOQnLIWkqXSc
+
+$argon2i$v=19$m=1024,t=2,p=2$dmMzRGM0anNoTGZDUld3ZA$fB6KjKt+osYmq29e40V1tDdp3fWMnkQp7OytiHjOAho
