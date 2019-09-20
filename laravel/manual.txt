@@ -1,0 +1,110 @@
+Alt+j para mudar todas as palavras de uma só vez.
+
+Instalando o Laravel
+
+composer create-project --prefer-dist laravel/laravel aqui vai o nome do projeto 5.8.*<- especificando a versão.
+
+Subindo servidor no Laravel
+
+php artisan serve 
+
+Criar migrarion
+php artisan make:migration criar_tabela_series 
+depois para executar
+ php artisan migrate 
+
+Criar Request
+php artisan make:request SeriesFormRequest
+
+Criar model
+php artisan make:model NomeDaModel -m <- para criar a migration
+
+Depois de criar as novas models e atribuir na migration os relacionamentos executa novamente o comando php artisan migrate
+Como gerar um modelo na linha de comando (php artisan make:model)
+Que a flag -m, do comando make:model, também gera as migrations, por exemplo:
+php artisan make:model Temporada -m
+Que o comando php artisan migrate executa as migrations novas
+Que definimos os relacionamentos no modelo através de métodos
+Que a cardinalidade é definida pelos métodos da classe Model, como hasMany ou belongsTo
+
+Criando contrellers php artisan make:controller TemporadasController
+
+Nesta aula, aprendemos como criar efetivamente os objetos em um relacionamento usando o ORM Eloquent. Por exemplo, para criar uma temporada a partir da série, usamos:
+
+$temporada = $serie->temporadas()->create(['numero' => 1]);
+Analogamente, criamos um episódio a partir da temporada:
+
+$temporada->episodios()->create(['numero' => 1]);
+Além disso, preparamos toda a interface web, para trabalhar com temporadas e episódios. 
+
+PHPStorm, podemos selecionar todo o código a ser movido, clicar com o botão direito, 
+em seguida em "Refactor -> Extract-> Method" (ou "Ctrl + Alt + M"). Dessa forma, 
+todo o código será extraído para uma nova função.
+
+Usando o método transaction() da facade DB (que precisaremos importar com "Alt + Enter"). 
+Esse método recebe uma função, e tudo que for executado dentro dela estará em uma única transação. 
+Dessa forma, se tivermos um erro na execução do nosso código, a transação não ocorrerá.
+
+vamos remover o código que cria a série vazia e a transação, e voltaremos ao nível de identação correto. 
+Em seguida, chamaremos o método DB::beginTransaction() antes do código para começar a transação, e DB::commit() 
+para enviar os dados ao banco de dados após o término dessa execução.
+
+/**/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+Nesta aula, aprendemos como criar classes auxiliares. Esses classes podem ser criadas na pasta 
+Provider ou Helpers, no nosso exemplo usamos a pasta Services. É boa prática encapsular regras 
+mais complexas dentro de classes.
+
+Além disso, você pode injetar algum objeto dessas classes no método do controller:
+
+class SeriesController extends Controller
+{
+
+    // outro código omitido
+
+    public function store(
+        SeriesFormRequest $request,
+        CriadorDeSerie $criadorDeSerie //passando a instancia
+    ) {
+
+        //outro código omitido
+
+    }
+}
+Por fim, aprendemos como lidar com transações no Laravel. As transações garantem que todos os 
+comandos enviados são executados de uma vez (ou desfeito de uma vez só). No Laravel, basta usar a 
+classe fachada DB para abrir e consolidar a transação:
+
+DB::beginTransaction();
+//código que altera o modelo
+DB:commit()
+Alternativamente, podemos usar o método DB::transaction(..), que recebe uma função anônima:
+
+DB::transaction(function () use (&$variavel1) {
+    //código transacional
+});
+
+Para criar controle de autenticação no laravel usar o comando php artisan make:auth
+
+É possivel ter tres tipos de autenticação com o laravel 
+primeira com if dentro do metodo usando o Auth::check()
+if (!Auth::check()) {
+        echo "Não autenticado";
+        exit();
+
+    }
+A segunda forma é na rota com o ->middleware('auth')
+Route::get('/series', 'SeriesController@index')
+	->name('listar_series')
+    ->middleware('auth');
+
+A terceira é com um contrutor dentro da classe controller
+public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+O Laravel nos fornece uma classe de Facade, com diversos métodos relacionados à autenticação. Esta classe se chama Auth.
+Auth::attempt
+Este metodo espera receber os dados necessarios para autenticação.
+
+Usar o Hash::make para criar senhas usando as bibliotecas do laravel

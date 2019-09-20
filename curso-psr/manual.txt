@@ -1,0 +1,29 @@
+PHP-FIG
+https://www.php-fig.org/
+Aqui tem as PSRs ou padroes de boas praticas para melhorar no desenvolvimento de componentes.
+
+Para novo projeto copiar as pastas
+config
+public
+src
+e os arquivo composer.json e o banco sqllite"caso necessario"
+
+Essas interfaces serão provindas do pacote http_message, que instalaremos no terminal com 
+composer require psr/http-message
+Com o pacote já baixado, poderemos importar o ServerRequestInterface e o 
+ResponseInterface. Na pasta "Controller", criaremos uma classe FormularioInsercao.php 
+que implementa a InterfaceControladorRequisicao e o método processaRequisicao().
+
+Nós baixamos um pacote que contém somente as interfaces de requisição e resposta, então precisaremos 
+buscar alguma implementação. No nosso caso, usaremos o pacote Nyholm, que funciona com o PHP7, 
+é 100% adequado às diretrizes da PSR-7 e implementa a PSR-17, de criação de requisições. 
+Para instalarmos essa implementação, executaremos o 
+comando 'composer require nyholm/psr7' no terminal.
+
+Essa implementação, quando instalada, já traz a interface da psr17, pois entende que em algum momento 
+precisaremos criar um requisição. Executaremos então o 
+comando 'composer require nyholm/psr7-server' 
+para termos a implementação de uma fábrica de mensagens HTTP.
+
+Copiaremos então o seguinte código disponibilizado na página do Nyholm, e colaremos em cima da 
+criação do nosso controlador.
