@@ -107,4 +107,18 @@ O Laravel nos fornece uma classe de Facade, com diversos métodos relacionados �
 Auth::attempt
 Este metodo espera receber os dados necessarios para autenticação.
 
-Usar o Hash::make para criar senhas usando as bibliotecas do laravel
+Usar o Hash::make para criar senhas usando as bibliotecas do laravel.
+
+No arquivo Kernel.php podemos definir nome para um middleware por exemplo
+
+TESTES COM UNIT
+Dentro da pasta do projeto executar o comando para criar classe de teste
+php artisan make:test TemporadaTeste --unit
+Depois o comando vendor\bin\phpunit para executar o teste
+PARA O UNIT ENCONTRAR A CLASSE ELA DEVE TEMINAR SEMPRE COM "TEST" Ex nomeDaClasseTest
+
+Criar um banco para teste sqlite
+Criar um arquivo .env.testing
+dentro adicionar 
+DB_CONNECTION=sqlite
+DB_DATABASE=:memory:
