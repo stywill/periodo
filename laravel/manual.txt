@@ -122,3 +122,12 @@ Criar um arquivo .env.testing
 dentro adicionar 
 DB_CONNECTION=sqlite
 DB_DATABASE=:memory:
+
+Como colocar a aplicação em produção
+https://laravel.com/docs/5.8/deployment.
+push do projeto com o Git para um repositório, entrarmos no SSH na máquina, baixarmos o projeto do Git e termos todo o código na máquina para ser executada.
+a primeira coisa a ser feita é rodar o composer install. Isso porque a pasta "vendor" não deve ser enviada junto com o restante do projeto, e inclusive, por padrão, está no arquivo .gitignore. 
+Depois, com o Laravel, deveremos executar php artisan key:genereate. Esse código adiciona uma string à linha APP_KEY do arquivo .env. Essa linha é utilizada como chave para realizar a parte de segurança do Laravel, como, por exemplo, criptografar as senhas de usuário. Portanto, sempre que colocamos uma aplicação em produção, precisamos alterar esse valor para que ela se mantenha segura.
+Em seguida, deveremos alterar a linha APP_ENV desse mesmo arquivo para prod. Dessa forma, o Laravel conseguirá buscar informações de como castear os dados e realizar algumas otimizações internas.
+Também deveremos mudar a linha APP_DEBUG para false. Assim, se a nossa aplicação retornar uma exceção, ao invés de retornar diversas informações do projeto, receberemos somente um 500 Server Error, o que ajuda bastante na segurança.
+Tendo feito isso, é pouco provável que utilizemos o SQLite como banco de dados de produção. Portanto, também precisaremos alterar os dados de conexão com o banco de dados. Depois de criado o banco de dados, precisaremos rodar as migrations, da mesma forma que fizemos várias vezes durante o curso.
