@@ -16,9 +16,10 @@ class SeriesController extends Controller
 {
     public function index(Request $request){
         $series = Serie::query()
-            ->orderBy('nome')->get();
+            ->orderBy('nome')->paginate($request->per_page);
         $mensagem = $request->session()->get('mensagem');
-        return view("series.index",['series'=>$series,'mensagem'=>$mensagem]);
+        $paginas = round($series->total()/$series->perPage());
+        return view("series.index",['series'=>$series,'paginas'=>$paginas,'mensagem'=>$mensagem]);
     }
 
     public function create()
@@ -31,7 +32,7 @@ class SeriesController extends Controller
        $request->rules();
        $serie = $criarSerie->criarSerie($request->nome, $request->qtd_temporadas,$request->ep_por_temporadas);
        $request->session()->flash('mensagem', "Série {$serie->id} e duas temporadas e episódios criados com sucesso {$serie->nome}");
-       return redirect()->route('listar_series');
+       return redirect()->route('listar_series',['page'=>1,'per_page'=>3]);
     }
 
     public function destroy(Request $request, RemovedorDeSerie $removedorDeSerie)

@@ -42,6 +42,8 @@ Séries
             </li>
          @endforeach
     </ul>
+    @include('paginacao',['results'=>$series])
+    {{$series->appends(['per_page'=> $series->perPage()])->links()}}
 <script>
     function toggleInput(serieId) {
         const nomeSerieEl = document.getElementById(`nome-serie-${serieId}`);

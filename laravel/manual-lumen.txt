@@ -1,0 +1,42 @@
+O lumen não tem servidor embutido então deve ser usado o do php : php -S localhost:8000 -t public
+Usar o programa Postman para maniputular a api
+
+Para criar uma migration usando o artisan: php artisan make:migration nome_da_migration --create=nome_da_tabela
+
+Habilitar o eloquent no lumem 
+
+bootstrap->app.php-> descomentar a linha do comando $app->withEloquent();
+
+Foram criadas rotas para inserir, listar, editar e deletar os dados no banco.
+A api usa todos os verbos HTTPS disponíveis.
+
+Com o get é possivel listar os registro, todos ou um único
+Get localhost:8000/api/series/
+Get localhost:8000/api/series/(passando o id)
+Post envia os dados no formato Json ({"nome":"valor"}) para gravar
+Post localhost:8000/api/series
+Com put é possivel editar o resgistro passando o id na url e o valor no formato de Json
+Put localhost:8000/api/series/(passando o id)
+Para deletar basta apenas informar o id no delete
+Delete localhost:8000/api/series/(passando o id)
+
+O ORM Eloquent possui Accessors e Mutators, para personalizar a forma de como os atributos são preenchidos e
+devolvidos.
+
+Accessor:
+public function getNumeroAttribute(int $numero):string
+    {
+        return "#".$numero;
+    }
+Mutator:
+ public function setNomeAttribute(string $nome):void
+    {
+       $this->attributes['nome'] = mb_convert_case($nome,MB_CASE_TITLE);
+    } 
+Paginação
+Para realizar a paginação com orm eloquent basta usar o metodo paginate() passando ou não a quantidade por página
+Caso não seja passado uma quantidade o valor padrão pode ser alterado adicionando na model a variavel (protected $perPage=3;)
+
+Criando navegação entre recursos
+Primeiro é necessario adicionar um array ao Json com os links usando a variavel appends (deve ser passada na forma de array) a model
+Deposi basta criar um metodo accessor passando as urls dentro de um array associativo.
