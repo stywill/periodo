@@ -40,3 +40,48 @@ Caso não seja passado uma quantidade o valor padrão pode ser alterado adiciona
 Criando navegação entre recursos
 Primeiro é necessario adicionar um array ao Json com os links usando a variavel appends (deve ser passada na forma de array) a model
 Deposi basta criar um metodo accessor passando as urls dentro de um array associativo.
+
+Para começar a implementar uma estrutura de validação para a api primeiro deve ser instalado um JWT JSON Web Token
+É um padão muito utilizado e reconhecido onde você representa os seus dados no formato em JSON e partir de uma série de contas,
+uma criptografia usando um determinado algoritimo, ele gera um Token para você, e cada parte do Token significa uma coisa.
+
+Nesse projeto foi usado o firebase
+Instalado apartir do comando composer require firebase/php-jwt
+
+Para implementar a verificação do token
+1- dentro do arquivo bootstrap->app.php descomenter o middleware e o register
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+]);
+
+$app->register(App\Providers\AuthServiceProvider::class);
+2- Dentro de Providers alterar o metodo boot com as configurações do firebese deve ficar dessa forma
+ $this->app['auth']->viaRequest('api', function (Request $request) {
+            if (!$request->hasHeader('Authorization')) {
+               return null;
+            }
+            $authorizationHeader = $request->header('Authorization');
+            $token = str_replace('Bearer','',$authorizationHeader);
+            $dadosAutenticacao = JWT::decode($token,'',['HS256']);
+            return new GenericUser(['email'=>$dadosAutenticacao]);
+            //return User::where('email',$dadosAutenticacao['email'])->first();
+        });
+3- Definindo o middleware a rota no para o grupo
+$router->group(['prefix'=>'api','middleware'=>'auth'],function () use($router){
+
+Criando autenticação
+OBS: É necessario descomentar o  $app->withFacades(); no bootstrap->app.php
+1- Criar o controller no caso TokenController para definir a validação e gerar o token
+no arquivo .env criar um chave no caso JWT_KEY com qualquer valor pegando com a função env()
+2-Passar a rota para esse controller
+
+Criando um seeder
+1- Rodar o comando php artisan make:seeder Nome da Seeder
+2- Dentro do seeder criado escrever os dados 
+3- adicionar a seeder criada no DatabaseSeeder.php
+4- Rodar o comando php artisan db:seed
+
+Criando autorização propria 
+1- Criar um Middleware no caso Autenticador
+2- Adicionar ao bootstrap->app.php igual ao auth ($app->routeMiddleware)
+3- Alterar na rota
