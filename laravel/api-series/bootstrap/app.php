@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\Autenticador;
+use App\Http\Middleware\CorsMiddleware;
 
 require_once __DIR__.'/../vendor/autoload.php';
 
@@ -68,6 +69,9 @@ $app->routeMiddleware([
 ]);
 $app->routeMiddleware([
     'autenticador'=>Autenticador::class,
+]);
+$app->routeMiddleware([
+    'cors'=>CorsMiddleware::class,
 ]);
 /*
 |--------------------------------------------------------------------------

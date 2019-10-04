@@ -17,8 +17,14 @@ use Laravel\Lumen\Routing\Router;
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
 /*não é necessario informar a / */
-$router->post('api/login','TokenController@gerarToken');
+$router->group(['prefix'=>'api','middleware'=>'cors'],function ()use($router){
+    $router->post('login','TokenController@gerarToken');
+});
+
+
+$router->get('api/listaLivre','SeriesController@index');
 
 $router->group(['prefix'=>'api','middleware'=>'autenticador'],function () use($router){
     $router->group(["prefix"=>"series"],function ()use($router){

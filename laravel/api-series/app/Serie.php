@@ -25,15 +25,9 @@ class Serie extends Model
 
     public function getLinksAttribute($link):array
     {
-        $episodios = Episodio::query()->where('serie_id',$this->id)->count();
-        if($episodios>0){
-            $episodiosLink = "/api/series/{$this->id}/episodios";
-        }else{
-            $episodiosLink ="";
-        }
         return [
             "self"=>"/api/series/{$this->id}",
-            "episodios"=>$episodiosLink
+            "episodios"=>"/api/series/{$this->id}/episodios"
         ];
     }
 }

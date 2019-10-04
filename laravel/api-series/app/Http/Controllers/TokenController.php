@@ -13,6 +13,8 @@ class TokenController extends Controller
 {
     public function gerarToken(Request $request)
     {
+        var_dump($request->isJson());
+        exit();
         $this->validate($request,[
             'email'=>'required|email',
             'password'=>'required'
@@ -24,5 +26,6 @@ class TokenController extends Controller
           }
           $token = JWT::encode(['email'=>$request->email],env('JWT_KEY'));
           return ['access_token'=>$token];
+
     }
 }
